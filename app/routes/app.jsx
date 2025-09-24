@@ -3,10 +3,7 @@ import { boundary } from "@shopify/shopify-app-remix/server";
 import { AppProvider as RemixAppProvider } from "@shopify/shopify-app-remix/react";
 import { NavMenu } from "@shopify/app-bridge-react";
 import { authenticate } from "../shopify.server";
-
-import { AppProvider as PolarisAppProvider } from "@shopify/polaris";
-import enTranslations from "@shopify/polaris/locales/en.json";
-import "@shopify/polaris/build/esm/styles.css";
+import polarisTranslations from "@shopify/polaris/locales/en.json" with { type: "json" };
 
 export const loader = async ({ request }) => {
   await authenticate.admin(request);
@@ -17,15 +14,17 @@ export default function App() {
   const { apiKey } = useLoaderData();
 
   return (
-    <RemixAppProvider isEmbeddedApp apiKey={apiKey}>
-      <PolarisAppProvider i18n={enTranslations}>
-        <NavMenu>
-          <a href="/app">🏠 Home</a>
-          <a href="/app/additional">📄 Additional Page</a>
-          <a href="/app/test-api">🧪 Test Page</a>
-        </NavMenu>
-        <Outlet />
-      </PolarisAppProvider>
+    <RemixAppProvider
+      isEmbeddedApp
+      apiKey={apiKey}
+      i18n={polarisTranslations}
+    >
+      <NavMenu>
+        <a href="/app">🏠 Home</a>
+        <a href="/app/additional">📄 Additional Page</a>
+        <a href="/app/test-api">🧪 Test Page</a>
+      </NavMenu>
+      <Outlet />
     </RemixAppProvider>
   );
 }
