@@ -2,7 +2,7 @@
 
 client_id = "47293c5d7e0a66694cae8b269ebdc9e2"
 name = "corner-cart-Tushar"
-application_url = "https://example.com"
+application_url = "https://corner-cart-tushar.onrender.com"
 embedded = true
 
 [webhooks]
@@ -13,7 +13,7 @@ api_version = "2025-10"
 scopes = "write_products"
 
 [auth]
-redirect_urls = [ "https://example.com/api/auth" ]
+redirect_urls = [ "https://corner-cart-tushar.onrender.com/api/auth" ]
 
 [build]
 automatically_update_urls_on_dev = true
