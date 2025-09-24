@@ -1,8 +1,11 @@
-import { Link, Outlet, useLoaderData, useRouteError } from "@remix-run/react";
+import { Outlet, useLoaderData, useRouteError } from "@remix-run/react";
 import { boundary } from "@shopify/shopify-app-remix/server";
-import { AppProvider } from "@shopify/shopify-app-remix/react";
+import { AppProvider as RemixAppProvider } from "@shopify/shopify-app-remix/react";
 import { NavMenu } from "@shopify/app-bridge-react";
 import { authenticate } from "../shopify.server";
+
+import { AppProvider as PolarisAppProvider } from "@shopify/polaris";
+import enTranslations from "@shopify/polaris/locales/en.json";
 import "@shopify/polaris/build/esm/styles.css";
 
 export const loader = async ({ request }) => {
@@ -14,14 +17,16 @@ export default function App() {
   const { apiKey } = useLoaderData();
 
   return (
-    <AppProvider isEmbeddedApp apiKey={apiKey}>
-      <NavMenu>
-        <Link to="/app" rel="home">🏠 Home</Link>
-        <Link to="/app/additional">📄 Additional Page</Link>
-        <Link to="/app/test-api">🧪 Test Page</Link>
-      </NavMenu>
-      <Outlet />
-    </AppProvider>
+    <RemixAppProvider isEmbeddedApp apiKey={apiKey}>
+      <PolarisAppProvider i18n={enTranslations}>
+        <NavMenu>
+          <a href="/app">🏠 Home</a>
+          <a href="/app/additional">📄 Additional Page</a>
+          <a href="/app/test-api">🧪 Test Page</a>
+        </NavMenu>
+        <Outlet />
+      </PolarisAppProvider>
+    </RemixAppProvider>
   );
 }
 
