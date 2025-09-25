@@ -18,4 +18,5 @@ COPY . .
 
 RUN npm run build
 
-CMD ["npm", "run", "docker-start"]
+CMD ["sh", "-c", "npx prisma migrate deploy && npm run start"]
+
