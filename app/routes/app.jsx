@@ -9,9 +9,16 @@ import enTranslations from "@shopify/polaris/locales/en.json";
 import "@shopify/polaris/build/esm/styles.css";
 
 export const loader = async ({ request }) => {
-  await authenticate.admin(request);
+  try {
+    console.log("🔍 Loader started for:", request.url);
+    await authenticate.admin(request);
+    console.log("✅ Auth passed for:", request.url);
+  } catch (err) {
+    console.error("❌ Auth error in loader:", err.message);
+  }
   return { apiKey: process.env.SHOPIFY_API_KEY || "" };
 };
+
 
 export default function App() {
   const { apiKey } = useLoaderData();
@@ -37,3 +44,4 @@ export function ErrorBoundary() {
 export const headers = (headersArgs) => {
   return boundary.headers(headersArgs);
 };
+
